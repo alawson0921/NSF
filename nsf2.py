@@ -7,6 +7,8 @@ import numpy as np
 ##WE CAN TRY TO TEST WITH N>1...
 #   note: 1.1 would be fine to work with so far
 
+#cleaned 3/2/2022
+
 #normal factorial
 def fact(j):
     return math.factorial(j) 
@@ -27,34 +29,36 @@ def nsfraw(nstep,base):
         c = c * b
         b = b-nstep
     return c
-#n-step factorial calculation
-base1 = 3.0
-num1 = nsf(0.5,base1)
-frac1 = fact(math.floor(base1/num1))
-frac2 = fact(math.floor(num1/base1))
-print("{0} = factorial / n-step".format(frac1))
-print("{0} = n-step / factorial".format(frac2))
 
-print()
+def nsftest1():
+    #n-step factorial calculation
+    base1 = 3.0
+    num1 = nsf(0.5,base1)
+    frac1 = fact(math.floor(base1/num1))
+    frac2 = fact(math.floor(num1/base1))
+    print("{0} = factorial / n-step".format(frac1))
+    print("{0} = n-step / factorial".format(frac2))
 
-##comparison with another n with the same a
-num2 = nsf(0.6,base1)
-print()
+    print()
 
-##comparison with another n with the same a pt 2
-num3 = nsf(0.4,base1)
-print()
+    ##comparison with another n with the same a
+    num2 = nsf(0.6,base1)
+    print()
+
+    ##comparison with another n with the same a pt 2
+    num3 = nsf(0.4,base1)
+    print()
 
 
 
 
 
-####################################################################################################################
+    ####################################################################################################################
 
-##HOW CAN WE FIND a! = b! with different n-factorial steps?
-#let's use 1!n=0.5 and try to find a b!n=0.25
-nsf(0.5,1.0)
-nsf(0.25,1.981330750601577)
+    ##HOW CAN WE FIND a! = b! with different n-factorial steps?
+    #let's use 1!n=0.5 and try to find a b!n=0.25
+    nsf(0.5,1.0)
+    nsf(0.25,1.981330750601577)
 
 ##use nsfraw for nsf_one and limit 0.2 < nsf_two_step < 1.0
 def reverse_nsf(nsf_one,nsf_two_nstep):
@@ -82,13 +86,14 @@ def reverse_nsf(nsf_one,nsf_two_nstep):
     print("The nsf equivalent is approximately {0}!({1})".format(n,nsf_two_nstep))
 
 ##testing around some reverse_nsf's
-reverse_nsf(nsfraw(0.5,1.0),0.25)
-reverse_nsf(nsfraw(0.3,4),0.2)
-print(nsfraw(0.2,3.368574678837455))
-print(nsfraw(0.3,4.0))
-reverse_nsf(nsfraw(1.1,math.e),0.9)
-print(math.e)
-nsf(0.01,math.e)
+def testrnsf1():
+    reverse_nsf(nsfraw(0.5,1.0),0.25)
+    reverse_nsf(nsfraw(0.3,4),0.2)
+    print(nsfraw(0.2,3.368574678837455))
+    print(nsfraw(0.3,4.0))
+    reverse_nsf(nsfraw(1.1,math.e),0.9)
+    print(math.e)
+    nsf(0.01,math.e)
 
 
 
@@ -97,19 +102,20 @@ nsf(0.01,math.e)
 
 ##CAN WE FIND a! + b! = c! with differnet and/or same n-factorial steps?
 ##YES: here's the proof
-print()
-print("1.0!(0.5) + 2.0!(0.5) = n!(0.5)")
-reverse_nsf((nsfraw(0.5,1.0)+nsfraw(0.5,2.0)),0.5)
+def testfltrnsf():
+    print()
+    print("1.0!(0.5) + 2.0!(0.5) = n!(0.5)")
+    reverse_nsf((nsfraw(0.5,1.0)+nsfraw(0.5,2.0)),0.5)
 ##This should work with any two nsf's
 
 ##PROVE a!(x) + b!(y) = c!(z)
 # EZ CLAP
 # let's use 2!(0.5) + 2!(0.3) = n!(0.7)
-print()
-print("2.0!(0.5) + 2.0!(0.3) = n!(0.7)")
-reverse_nsf((nsfraw(0.5,2.0)+nsfraw(0.3,2.0)),0.7)
-print()
-print()
+    print()
+    print("2.0!(0.5) + 2.0!(0.3) = n!(0.7)")
+    reverse_nsf((nsfraw(0.5,2.0)+nsfraw(0.3,2.0)),0.7)
+    print()
+    print()
 
 
 ##NOW I want to prove 2!(0.3) + 2!(0.5) = 2!(n)
@@ -130,8 +136,10 @@ print()
 # 6. We must find a way to find the local minimum with a fixed base(a) 
 
 
-functionmin = 0
+FUNCTIONMIN = 0
 
+#Testing the limits of nsf. It does approach infinity on two sides
+"""
 nsf(0.1,1.0) ##smallest value with a=1.0, probably proving that the function nsf has a range of (0,inf)
 nsf(0.2,1.0)
 nsf(0.3,1.0)
@@ -173,7 +181,9 @@ nsf(0.1,2.3)
 nsf(0.01,2.3)
 nsf(0.001,2.3) ##decreases
 nsf(0.0001,2.3) ##reaches inf?
-
+"""
+##FOUND A CONSTANT IN A FUNCTION and more tests
+"""
 nsf(0.0001,1.3997036774559777) ##THE BORDER! Still could go on forever
 print()
 print()
@@ -194,9 +204,10 @@ nsf(0.01,5)
 nsf(0.005,5)
 print()
 print()
+"""
 
-
-x = np.arange(0,1,0.01)
+lawson_const = 1.3997036774559777
+#x = np.arange(0,1,0.01)
 
 ##array for y axis to plot
 def myar(st,fin,base,step):
@@ -240,51 +251,51 @@ def localmax(st,fin,base,step):
         ar = nsf_ar(st,fin,base,step)
         ar.sort()
         return ar[ar.count()-1]
+def graphnsf():
+    y = myar(0,1,lawson_const,0.01)
 
-y = myar(0,1,lawson_const,0.01)
+    pyplot.plot(x,y)
+    pyplot.title("NSF Lawson_constant!(x)")
+    pyplot.show()
 
-pyplot.plot(x,y)
-pyplot.title("NSF Lawson_constant!(x)")
-pyplot.show()
+    x = np.arange(0,2,0.01)
+    y = myar(0,2,lawson_const,0.01)
 
-#x = np.arange(0,2,0.01)
-#y = myar(0,2,lawson_const,0.01)
+    pyplot.plot(x,y)
+    pyplot.title("NSF Lawson_constant!(x)")
+    pyplot.show()
 
-#pyplot.plot(x,y)
-#pyplot.title("NSF Lawson_constant!(x)")
-#pyplot.show()
+    ##Another graph
+    x2 = np.arange(0,2,0.01)
 
-###Another graph
-#x2 = np.arange(0,2,0.01)
+    y2 = myar(0,2,3,0.01)
 
-#y2 = myar(0,2,3,0.01)
+    pyplot.plot(x2,y2)
+    pyplot.title("NSF 3!(x)")
+    pyplot.show()
 
-#pyplot.plot(x2,y2)
-#pyplot.title("NSF 3!(x)")
-#pyplot.show()
+    ##Another graph
+    x3 = np.arange(0,2,0.01)
+    y3 = myar(0,2,2,0.01)
 
-###Another graph
-#x3 = np.arange(0,2,0.01)
-#y3 = myar(0,2,2,0.01)
+    pyplot.plot(x3,y3)
+    pyplot.title("NSF 2!(x)")
+    pyplot.show()
 
-#pyplot.plot(x3,y3)
-#pyplot.title("NSF 2!(x)")
-#pyplot.show()
+    ##Another graph
+    x4 = np.arange(0,2,0.01)
+    y4 = myar(0,2,4,0.01)
+    pyplot.plot(x4,y4)
+    pyplot.title("NSF 4!(x)")
+    pyplot.show()
 
-###Another graph
-#x4 = np.arange(0,2,0.01)
-#y4 = myar(0,2,4,0.01)
-#pyplot.plot(x4,y4)
-#pyplot.title("NSF 4!(x)")
-#pyplot.show()
+    ##Another graph
+    x5 = np.arange(0,2,0.01)
+    y5 = myar(0,2,8,0.01)
 
-###Another graph
-#x5 = np.arange(0,2,0.01)
-#y5 = myar(0,2,8,0.01)
-
-#pyplot.plot(x5,y5)
-#pyplot.title("NSF 8!(x)")
-#pyplot.show()
+    pyplot.plot(x5,y5)
+    pyplot.title("NSF 8!(x)")
+    pyplot.show()
 
 
 ##minimum finding function
@@ -324,7 +335,7 @@ def reversensf_n(num,base):
         if(localmax(0,num/2,base,0.01)==-1):
             print("There may be a solution really close to 0")
             if(num>base):
-                return 0;
+                return 0
             ##STEP 2: NUM < BASE continue with a set p1
             ##STEP 3: HOW TO SET P1?
 
@@ -358,17 +369,7 @@ def rnsfn(num,base):
         for i in range(0,len(ar)):
             if(nsfraw(ar[i],base)-lim <num and nsfraw(ar[i],base)+lim > num):
                 return ar[i]
-
-##much greater depth---r SET LIM TO DEFAULT 0.01
-def rnsfndeep(num,base,p1,lim):
-    ans = 0.0
-    ar = nsf_ar(p1-(lim*5),p1+(lim*5),base,lim)
-    while(lim>0.000000001):
-        for i in range(len(ar),0):
-           if(nsfraw(ar[i],base)>num and nsfraw(ar[i+1],base)<num):
-               ans = ar[i+1]
-        rnsfndeep(num,base,ans,lim/10)
-
+        
 ##prove 2!(0.24) + 2!(0.49) = 2!(n)
 print("2!(0.24) + 2!(0.49) = 2!(n)")
 num = nsfraw(0.24,2) + nsfraw(0.49,2)
@@ -377,10 +378,8 @@ print("Finding {0}".format(num))
 
 
 ##testing method 2
-f = rnsfn(num,2)
-ans = rnsfndeep(num,2,f,0.01)
+ans = rnsfn(num,2)
+
 
 print("n={0}".format(ans))
 ##ans approx = 0.64
-nsf(ans,2)
-nsf(0.6418,2)
