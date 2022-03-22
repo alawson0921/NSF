@@ -251,6 +251,7 @@ def localmax(st,fin,base,step):
         ar = nsf_ar(st,fin,base,step)
         ar.sort()
         return ar[ar.count()-1]
+
 def graphnsf():
     y = myar(0,1,lawson_const,0.01)
 
@@ -383,3 +384,21 @@ ans = rnsfn(num,2)
 
 print("n={0}".format(ans))
 ##ans approx = 0.64
+
+#ANALYSIS: DIVERGING PLOT
+def divergeplot():
+    x = []
+    y = []
+    for n in range(lawson_const+0.01,10.0,0.01):
+        ar = nsf_ar(0,n,n,0.01)
+        ar.reverse()
+        i = 0
+        for m in ar:
+            if m == 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999:
+                y.append(10.0-(0.01*i))
+                x.append(n)
+                break
+            i+=1
+    pyplot.plot(x,y)
+    pyplot.title("NSF Lawson_constant!(x)")
+    pyplot.show()
