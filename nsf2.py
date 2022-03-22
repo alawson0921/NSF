@@ -389,16 +389,21 @@ print("n={0}".format(ans))
 def divergeplot():
     x = []
     y = []
-    for n in range(lawson_const+0.01,10.0,0.01):
-        ar = nsf_ar(0,n,n,0.01)
+    a = np.arange(lawson_const+0.01,10.0,0.01)
+    #n!m
+    for n in a:
+        ar = nsf_ar(0.01,n/2,n,0.01)
+        l = len(ar)
         ar.reverse()
         i = 0
         for m in ar:
-            if m == 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999:
-                y.append(10.0-(0.01*i))
+            if m > 999999999999999999999:
+                y.append((l-i)*0.01)
                 x.append(n)
                 break
             i+=1
     pyplot.plot(x,y)
-    pyplot.title("NSF Lawson_constant!(x)")
+    pyplot.title("Diverging x!y")
     pyplot.show()
+
+divergeplot()
