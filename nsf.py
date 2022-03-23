@@ -1,6 +1,7 @@
 #File: nsf.py (n-step factorials)
 #Author: Adam Lawson
 import math
+import numpy as np
 #from matplotlib import pyplot
 #import numpy as np
 ##ADVICE: please keep the steps within [1,0.001) or maybe even [1,0.005)
@@ -27,6 +28,14 @@ def nsfraw(nstep,base):
         c = c * b
         b = b-nstep
     return c
+def long_nsfraw(nstep,base):
+    b = long(base-nstep)
+    c = long(base)
+    while(b>0):
+        c = c * b
+        b = b-nstep
+    return c
+"""
 #n-step factorial calculation
 base1 = 3.0
 num1 = nsf(0.5,base1)
@@ -53,7 +62,7 @@ print()
 #let's use 1!n=0.5 and try to find a b!n=0.25
 nsf(0.5,1.0)
 nsf(0.25,1.981330750601577)
-
+"""
 ##use nsfraw for nsf_one and limit 0.2 < nsf_two_step < 1.0
 def reverse_nsf(nsf_one,nsf_two_nstep):
     n = 1.0
@@ -78,7 +87,7 @@ def reverse_nsf(nsf_one,nsf_two_nstep):
             inc = inc / 10
             inccount = 0
     print(f"The nsf equivalent is approximately {n:.15f}!({nsf_two_nstep})")
-
+"""
 ##testing around some reverse_nsf's
 reverse_nsf(nsfraw(0.5,1.0),0.25)
 reverse_nsf(nsfraw(0.3,4),0.2)
@@ -110,9 +119,9 @@ print()
 print()
 ##NOW I want to prove 2!(0.3) + 2!(0.5) = 2!(n)
     # very likely possible because the local minimum of 2 should be less than the sum
+"""
 
-
-
+"""
 ################################################################################################################
 ##FIND A METHOD OF REVERSE NSF BUT WITH AN UNKNOWN N STEP INSTEAD OF BASE
 
@@ -176,8 +185,9 @@ nsf(0.0001,2.3) ##reaches inf?
 nsf(0.0001,1.3997036774559777) ##THE BORDER! Still could go on forever
 print()
 print()
-
+"""
 lawson_const = 1.3997036774559777
+"""
 ##NEXT: How do we find the local minimum of a base > 1.399703774559777?
 #find the number where the local minimum of that base does not decrease
 nsf(0.1,4)
@@ -207,3 +217,4 @@ def min(ns):
 num = nsfraw(0.3,2) + nsfraw(0.5,2)
 print(num)
 ##HOW CAN I GRAPH THIS? kekw
+"""
