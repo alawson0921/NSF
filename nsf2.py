@@ -393,17 +393,83 @@ def divergeplot():
     #n!m
     for n in a:
         ar = nsf_ar(0.01,n/2,n,0.01)
-        l = len(ar)
+        ar1 = ar
         ar.reverse()
         i = 0
         for m in ar:
-            if m > 999999999999999999999:
-                y.append((l-i)*0.01)
+            if m > 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999:
+                y.append(float(ar1.index(m)*0.01))
                 x.append(n)
                 break
             i+=1
     pyplot.plot(x,y)
     pyplot.title("Diverging x!y")
+    pyplot.ylabel("Point of divergence x!y")
     pyplot.show()
+    x1 = x[0]
+    y1 = y[0]
+    x2 = x[len(x)-1]
+    y2 = y[len(y)-1]
+    ##slope
+    slope = (y2-y1)/(x2-x1)
+    ##intersect
+    b = y1 - (slope*x1)
+    #print("y={0}x+{1}".format(slope,b))
+    #answer y=0.4926470588235291x+0.013675394194481605
+    x3 = b/(slope - 0.5)
+    y3 = 0.5 * x3
+    print("diverging and maximum at point ({0},{1})".format(x3,y3))
 
 divergeplot()
+
+
+def divergeplot2():
+    x = []
+    y = []
+    a = np.arange(3,1000.0,1)
+    #n!m
+    for n in a:
+        ar = nsf_ar(0.01,n/2,n,0.01)
+        ar1 = ar
+        ar.reverse()
+        i = 0
+        for m in ar:
+            if m > 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999:
+                y.append(float(ar1.index(m)*0.01))
+                x.append(n)
+                break
+            i+=1
+    pyplot.plot(x,y)
+    pyplot.title("Diverging x!y")
+    pyplot.ylabel("Point of divergence x!y")
+    pyplot.show()
+    print(x[0])
+    print(y[0])
+    print(x[len(x)-1])
+    print(y[len(y)-1])
+
+#divergeplot2()
+
+def findintersect():
+    x = []
+    y = []
+    a = np.arange(lawson_const+0.01,10.0,0.01)
+    #n!m
+    for n in a:
+        ar = nsf_ar(0.01,n/2,n,0.01)
+        ar1 = ar
+        ar.reverse()
+        i = 0
+        for m in ar:
+            if m > 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999:
+                y.append(float(ar1.index(m)*0.01))
+                x.append(n)
+                break
+            i+=1
+    for yvalue in y:
+        for xvalue in x:
+            if(yvalue<xvalue/2.01 and yvalue>xvalue/2):
+                print("x/2: {0}".format(xvalue))
+                print("y: {0}".format(yvalue))
+
+#findintersect()
