@@ -3,16 +3,10 @@
 import math
 from matplotlib import pyplot
 import numpy as np
-##ADVICE: please keep the steps within [1,0.001) or maybe even [1,0.005)
-##WE CAN TRY TO TEST WITH N>1...
-#   note: 1.1 would be fine to work with so far
 
-#cleaned 3/2/2022
-
-#normal factorial
-def fact(j):
-    return math.factorial(j) 
+##########################
 ##NSTEP FACTORIAL FUNCTION
+##########################
 def nsf(nstep,base):
     b = base-nstep
     c = base
@@ -21,7 +15,10 @@ def nsf(nstep,base):
         b = b-nstep
     print("{0} = {1}! with n-step of {2}".format(c,base,nstep))
     return c
-###nsf raw
+
+##################################
+##nsf raw - doesn't print anything
+##################################
 def nsfraw(nstep,base):
     b = base-nstep
     c = base
@@ -30,37 +27,10 @@ def nsfraw(nstep,base):
         b = b-nstep
     return c
 
-def nsftest1():
-    #n-step factorial calculation
-    base1 = 3.0
-    num1 = nsf(0.5,base1)
-    frac1 = fact(math.floor(base1/num1))
-    frac2 = fact(math.floor(num1/base1))
-    print("{0} = factorial / n-step".format(frac1))
-    print("{0} = n-step / factorial".format(frac2))
-
-    print()
-
-    ##comparison with another n with the same a
-    num2 = nsf(0.6,base1)
-    print()
-
-    ##comparison with another n with the same a pt 2
-    num3 = nsf(0.4,base1)
-    print()
-
-
-
-
-
-    ####################################################################################################################
-
-    ##HOW CAN WE FIND a! = b! with different n-factorial steps?
-    #let's use 1!n=0.5 and try to find a b!n=0.25
-    nsf(0.5,1.0)
-    nsf(0.25,1.981330750601577)
-
+##################################################################
 ##use nsfraw for nsf_one and limit 0.2 < nsf_two_step < 1.0
+##reverse_nsf - use this to find the value you want with most NSFs
+##################################################################
 def reverse_nsf(nsf_one,nsf_two_nstep):
     n = 1.0
     inc = 1.0
@@ -85,7 +55,10 @@ def reverse_nsf(nsf_one,nsf_two_nstep):
             inccount = 0
     print("The nsf equivalent is approximately {0}!({1})".format(n,nsf_two_nstep))
 
+####################################
 ##testing around some reverse_nsf's
+##test reverse nsf
+####################################
 def testrnsf1():
     reverse_nsf(nsfraw(0.5,1.0),0.25)
     reverse_nsf(nsfraw(0.3,4),0.2)
@@ -95,49 +68,26 @@ def testrnsf1():
     print(math.e)
     nsf(0.01,math.e)
 
-
-
-
-################################################################################################################
-
+#########################################################################
 ##CAN WE FIND a! + b! = c! with differnet and/or same n-factorial steps?
 ##YES: here's the proof
+##Test FLT reverse NSF
+#########################################################################
 def testfltrnsf():
     print()
     print("1.0!(0.5) + 2.0!(0.5) = n!(0.5)")
     reverse_nsf((nsfraw(0.5,1.0)+nsfraw(0.5,2.0)),0.5)
 ##This should work with any two nsf's
-
 ##PROVE a!(x) + b!(y) = c!(z)
-# EZ CLAP
 # let's use 2!(0.5) + 2!(0.3) = n!(0.7)
     print()
     print("2.0!(0.5) + 2.0!(0.3) = n!(0.7)")
     reverse_nsf((nsfraw(0.5,2.0)+nsfraw(0.3,2.0)),0.7)
     print()
-    print()
 
-
-##NOW I want to prove 2!(0.3) + 2!(0.5) = 2!(n)
-    # very likely possible because the local minimum of 2 should be less than the sum
-
-
-
-################################################################################################################
-##FIND A METHOD OF REVERSE NSF BUT WITH AN UNKNOWN N STEP INSTEAD OF BASE
-
-# this is going to be a lot harder since from the first example, 3.0!(0.5) is greater than both 3!(0.4) and 3!(0.6)
-# 1. We know there's a minimum in this function (but we don't know what it is yet... maybe just 0.5)
-# 2. We also know that we may not be able to prove a!(x) = b!(y) where x does not equal to y because of this minimum
-#       however there could be a solution in the negatives
-# 3. However, finding the reverse nsf with a specific number above the minimum is possible with any a and n
-# 4. There are restrictions when confined to a specific base(a) where there is a local minimum.
-# 5. What we really know is that the range of this function from the domain of x>0 is the specific minimum (m), to infinity
-# 6. We must find a way to find the local minimum with a fixed base(a) 
-
-
-FUNCTIONMIN = 0
-
+#################
+#MANUAL TESTING
+#################
 #Testing the limits of nsf. It does approach infinity on two sides
 """
 nsf(0.1,1.0) ##smallest value with a=1.0, probably proving that the function nsf has a range of (0,inf)
@@ -207,9 +157,10 @@ print()
 """
 
 lawson_const = 1.3997036774559777
-#x = np.arange(0,1,0.01)
 
-##array for y axis to plot
+###########################
+##MYARRAY for x y plot
+###########################
 def myar(st,fin,base,step):
     ar = []
     i = float(st)
@@ -227,7 +178,9 @@ def myar(st,fin,base,step):
         i = i + step
     return ar
 
+#######################
 ##array of points raw
+#######################
 def nsf_ar(st,fin,base,step):
     ar = []
     i = float(st)
@@ -242,7 +195,9 @@ def nsf_ar(st,fin,base,step):
             i = i + step
     return ar
 
+################
 ##local maximum
+################
 def localmax(st,fin,base,step):
     ar = []
     if(base>lawson_const):
@@ -252,6 +207,9 @@ def localmax(st,fin,base,step):
         ar.sort()
         return ar[ar.count()-1]
 
+######################
+##GRAPH NSFs MANUALLY
+######################
 def graphnsf():
     y = myar(0,1,lawson_const,0.01)
 
@@ -298,8 +256,9 @@ def graphnsf():
     pyplot.title("NSF 8!(x)")
     pyplot.show()
 
-
+############################
 ##minimum finding function
+############################
 def minnsf(ns,step_end):
     if(ns<=lawson_const):
         return 0.0
@@ -308,7 +267,10 @@ def minnsf(ns,step_end):
         ar.sort()
         return ar[0]
 
+###################################
 ##override twopoint
+##METHOD FOR FINDING REVERSE NSFs
+###################################
 def decfind(num,base,p1,p2,mag,lim):
     while(mag>lim):
         ar = nsf_ar(p1,p2,num,mag)
@@ -320,8 +282,10 @@ def decfind(num,base,p1,p2,mag,lim):
         mag = mag/10
     return p1
 
-
-#reverse nsf-n
+#####################################
+##reverse nsf-n
+##REVERSE NSF BUT WORKS WITH N INPUT
+#####################################
 def reversensf_n(num,base):
     p1 = 0
     p2 = 0
@@ -353,6 +317,9 @@ def reversensf_n(num,base):
         ## 2. CREATE AN APPROXIMATOR DECIMALLY if condition 1 holds in favor of the local max
         ## 3. DO NOT FORGET TO HAVE THE MAXNSF UPDATED WITH ITS OWN ARRAY
 
+#############################
+##BETTER AND ADJUSTED RNSF-N
+#############################
 def rnsfn(num,base):
     lim = 0.01
     p1 = 0
@@ -372,20 +339,22 @@ def rnsfn(num,base):
                 return ar[i]
         
 ##prove 2!(0.24) + 2!(0.49) = 2!(n)
-print("2!(0.24) + 2!(0.49) = 2!(n)")
-num = nsfraw(0.24,2) + nsfraw(0.49,2)
-print("Finding {0}".format(num))
+#print("2!(0.24) + 2!(0.49) = 2!(n)")
+#num = nsfraw(0.24,2) + nsfraw(0.49,2)
+#print("Finding {0}".format(num))
 ##ans = reversensf_n(num,2)
 
 
 ##testing method 2
-ans = rnsfn(num,2)
+#ans = rnsfn(num,2)
 
 
-print("n={0}".format(ans))
+#print("n={0}".format(ans))
 ##ans approx = 0.64
 
+#############################
 #ANALYSIS: DIVERGING PLOT
+#############################
 def divergeplot():
     x = []
     y = []
@@ -419,10 +388,13 @@ def divergeplot():
     x3 = b/(slope - 0.5)
     y3 = 0.5 * x3
     print("diverging and maximum at point ({0},{1})".format(x3,y3))
+    #point (-1.8598536104494205,-0.9299268052247103)
 
-divergeplot()
+#divergeplot()
 
-
+#######################################
+##MANUAL TEST OF A HUGE DIVERGING PLOT
+#######################################
 def divergeplot2():
     x = []
     y = []
@@ -450,10 +422,96 @@ def divergeplot2():
 
 #divergeplot2()
 
-def findintersect():
+##################################################
+##NSFPRINTSTEPS - in case you want to verify work
+##################################################
+def nsfprintsteps(base,nstep):
+    b = base-nstep
+    c = base
+    if(b<0):
+        while(b<-0.00000000000001):
+            c = c*b
+            print("Step: product = {0}".format(c))
+            b=b-nstep
+    else:
+        while(b>0):
+            c = c * b
+            print("Step: product = {0}".format(c))
+            b = b-nstep
+    
+    print("{0} = {1}! with n-step of {2}".format(c,base,nstep))
+    return c
+
+########################################
+##Universal NSF with input of all Reals
+########################################
+def nsfR(base,nstep):
+    b = base-nstep
+    c = base
+    if(b<0):
+        while(b<-0.00000000000001):
+            c = c*b
+            #print("Step: product = {0}".format(c))
+            b=b-nstep
+    else:
+        while(b>0):
+            c = c * b
+            #print("Step: product = {0}".format(c))
+            b = b-nstep
+    
+    #print("{0} = {1}! with n-step of {2}".format(c,base,nstep))
+    return c
+#nsfprintsteps(-1.8598536104494205,-0.9299268052247103)
+
+##see diverging point
+#print(nsfR(-lawson_const-0.000000001,-0.0001))
+##partial reflection of the positive NSF on the third quadrant but switching between positive and negative
+
+#################################
+##TESTING PLOTTING NEGATIVE NSFs
+#################################
+def negativeplot():
+    def nsfR_ar(st,fin,base,step):
+        ar = []
+        i = float(st)
+        if base > 0:
+            if(i == 0):
+                i = i + step
+                if(base <= lawson_const):
+                    ar.append(0.00)
+                else:
+                    ar.append(99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)
+            while(i<=fin):
+                ar.append(nsfraw(i,base))
+                i = i + step
+            return ar
+        else:
+            while(i<=fin):
+                if(fin==0):
+                    if(base >= -lawson_const):
+                        ar.append(0.00)
+                    else:
+                        ar.append(-99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)
+                else:
+                    ar.append(nsfR(base,i))
+                    i += step
+            
+            return ar
+    y = nsfR_ar(-5,0,-2,-0.1)
+    x = np.arange(-5,0,0.1)
+    pyplot.plot(x,y)
+    pyplot.title("NSF -2!(x)")
+    pyplot.show()
+
+#negativeplot()
+
+###############################
+##MANUAL CHECK OF DIVERGE PLOT
+###############################
+def divergeplot3():
     x = []
     y = []
-    a = np.arange(lawson_const+0.01,10.0,0.01)
+    a = np.arange(999,1000.1,0.1)
     #n!m
     for n in a:
         ar = nsf_ar(0.01,n/2,n,0.01)
@@ -463,13 +521,16 @@ def findintersect():
         for m in ar:
             if m > 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999:
                 y.append(float(ar1.index(m)*0.01))
-                x.append(n)
+                x.append(n+999)
                 break
             i+=1
-    for yvalue in y:
-        for xvalue in x:
-            if(yvalue<xvalue/2.01 and yvalue>xvalue/2):
-                print("x/2: {0}".format(xvalue))
-                print("y: {0}".format(yvalue))
+    pyplot.plot(x,y)
+    pyplot.title("Diverging x!y")
+    pyplot.ylabel("Point of divergence x!y")
+    pyplot.show()
+    print(x[0])
+    print(y[0])
+    print(x[len(x)-1])
+    print(y[len(y)-1])
 
-#findintersect()
+#divergeplot3()
