@@ -218,3 +218,4 @@ num = nsfraw(0.3,2) + nsfraw(0.5,2)
 print(num)
 ##HOW CAN I GRAPH THIS? kekw
 """
+a = 0
