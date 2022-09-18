@@ -30,21 +30,25 @@ def main():
     basearr = []
     newarr = []
     sinarr = []
-    basearr=np.arange(0.00,5.00,0.01)
+    basearr=np.arange(-5.00,1.00,0.01)
     for x in basearr:
         nsfarr.append(nsf1(x))
         ##nsfarr2.append(nsf2(x))
-        gammaarr.append(math.gamma(x+1))
+        #gammaarr.append(math.gamma(x+1))
         #s = math.sin(x*math.pi/2)
         #sinarr.append(s)
-    ##pyplot.plot(basearr,gammaarr, label = "Gamma(x+1)", linewidth=5)
-    ##pyplot.plot(basearr,nsfarr, label = "NSF(x,1)", linewidth=5, alpha=0.6)
+    #pyplot.plot(basearr,gammaarr, label = "Gamma(x+1)", linewidth=5)
+    pyplot.plot(basearr,nsfarr, label = "NSF(x,1)", linewidth=5)
+    pyplot.axis(True)
+    pyplot.title("g(x)")
+    pyplot.legend()
+    pyplot.show()
 
     #pyplot.plot(basearr,nsfarr2, label= "nsf2")
     #pyplot.plot(basearr,sinarr, label= "sin")
 
     #pyplot.xlabel("x")
-
+    """
     for y in range(0,len(basearr)):
         n = nsfarr[y]/gammaarr[y]
         s = 1.35*math.sin((y+math.pi)/120 - math.pi/120)
@@ -55,6 +59,7 @@ def main():
     pyplot.title("g(x)")
     pyplot.legend()
     pyplot.show()
+    """
     #pyplot.plot(basearr,sinarr)
 
     #pyplot.title("NSF/Gamma")
